@@ -1,38 +1,49 @@
 let form = document.querySelector('form');
-let input = document.querySelector('#input');
-let select_value = document.querySelector('#expression');
-
-form.addEventListener('submit',check);
+let option = document.querySelector('#regex')
+let p = document.getElementById("result")
 
 
-function showResult(message){
-    let res_div = document.querySelector('#result');
-    let p = document.createElement('p');
-    p_t = document.createTextNode(message);
-    p.appendChild(p_t);
-    res_div.appendChild(p);
+form.addEventListener('submit',display);
 
 
-}
-function check(e){
-    let input_value = input.value;
-    switch(select_value.value){
-
-        case "phone":
-            check_phone(input_value);
-            break;
-        case "email":
-            check_phone(input_value);
-            break;
-        case "postcode":
-            check_phone(input_value);
-            break;
-
+function display(e){
+    let input__value = document.getElementById('input').value.trim();
+    if(input__value!==""){
+        function check(value,regex){
+            if(regex.test(value)){
+                p.innerHTML = 'Success'
+    
+            }
+            else{
+                p.innerHTML = 'failed'
+            }
+            setTimeout(function(){
+                p.innerHTML ="";
+            },3000)
+        }
+        switch(option.value){
+            case '1':
+                var re = /^(\+)?(88)?(01)[0-9]{9}$/;
+                check(input__value,re);
+                break;
+            case '2':
+                var re = /^([a-zA-Z0-9].?)+[^.]@([a-zA-Z0-9].?)+[^.]$/ ;
+                check(input__value,re);
+                break;
+            case '3':
+                var re = /^[0-9]{4}$/
+                check(input__value,re)
+                break;
+            
+        }
     }
+    else{
+        alert("Input field empty")
+    }
+
+    
+
     e.preventDefault();
 }
-function check_phone(selection){
-    if (selection == "phone"){
-       showResult("Right");
-    }
-}
+
+
